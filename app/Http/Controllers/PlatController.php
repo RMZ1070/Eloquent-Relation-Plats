@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Plat;
+use App\Saveur;
 use Illuminate\Http\Request;
 
 class PlatController extends Controller
@@ -14,9 +15,21 @@ class PlatController extends Controller
      */
     public function index()
     {
-        //
+        $plats = Plat::all();
+        return view('plats/plats', compact('plats'));
     }
 
+    public function show($id){
+
+        $saveurs = Saveur::find($id);
+
+        $plats = $saveurs->plats;
+
+        return view('plats/saveurs', compact('plats','saveurs'));
+
+    }
+
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -24,7 +37,8 @@ class PlatController extends Controller
      */
     public function create()
     {
-        //
+        $saveurs = Saveur::all();
+        return view('plats/create', compact('saveurs'));
     }
 
     /**
@@ -35,27 +49,21 @@ class PlatController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $plat = new plat();
+        $plat->plat = $request->input('plat');
+        $plat->id_saveur = $request->input('saveur');
+        $plat->save();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Plat  $plat
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Plat $plat)
-    {
-        //
+        return redirect()->route('welcome');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Plat  $plat
+     * @param  \App\Saveur  $saveur
      * @return \Illuminate\Http\Response
      */
-    public function edit(Plat $plat)
+    public function edit(Saveur $saveur)
     {
         //
     }
@@ -64,21 +72,26 @@ class PlatController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Plat  $plat
+     * @param  \App\Saveur  $saveur
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Plat $plat)
+    public function update(Request $request,$id)
     {
-        //
+        $plat = Plat::find($id);
+        $plat->plat = $request->input('plat');
+
+        $plat->save();
+
+        return redirect()->route('welcome');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Plat  $plat
+     * @param  \App\Saveur  $saveur
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Plat $plat)
+    public function destroy(Saveur $saveur)
     {
         //
     }

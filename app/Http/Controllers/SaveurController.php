@@ -14,7 +14,8 @@ class SaveurController extends Controller
      */
     public function index()
     {
-        //
+        $saveur = Saveur::all();
+        return view('plats/create', compact('saveur'));
     }
 
     /**
@@ -24,7 +25,8 @@ class SaveurController extends Controller
      */
     public function create()
     {
-        //
+        $saveurs = Saveur::all();
+        return view('saveur/createS', compact('saveurs'));
     }
 
     /**
@@ -35,7 +37,11 @@ class SaveurController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $saveur = new saveur();
+        $saveur->nom = $request->input('nom');
+        $saveur->save();
+
+        return redirect()->route('welcome');
     }
 
     /**
@@ -46,7 +52,8 @@ class SaveurController extends Controller
      */
     public function show(Saveur $saveur)
     {
-        //
+        $saveurs = Saveur::all();
+        return view('plats/saveurs',compact('saveurs'));
     }
 
     /**
@@ -57,7 +64,7 @@ class SaveurController extends Controller
      */
     public function edit(Saveur $saveur)
     {
-        //
+       //
     }
 
     /**
@@ -67,9 +74,14 @@ class SaveurController extends Controller
      * @param  \App\Saveur  $saveur
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Saveur $saveur)
+    public function update(Request $request, $id)
     {
-        //
+        $saveur = Saveur::find($id);
+        $saveur->saveur = $request->input('nom');
+
+        $saveur->save();
+
+        return redirect()->route('welcome');
     }
 
     /**
@@ -78,8 +90,10 @@ class SaveurController extends Controller
      * @param  \App\Saveur  $saveur
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Saveur $saveur)
+    public function destroy(Saveur $id)
     {
-        //
+        $saveur = Saveur::find($id);
+        $saveur->delete();
+        return redirect()->route('welcome');
     }
 }

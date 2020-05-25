@@ -15,10 +15,7 @@ class CreatePlatsTable extends Migration
     {
         Schema::create('plats', function (Blueprint $table) {
             $table->id();
-            $table->string('riz');
-            $table->string('crepe');
-            $table->string('gauffre');
-            $table->string('lasagne');
+            $table->string('plat');
             $table->bigInteger('id_saveur')->unsigned();
             $table->foreign('id_saveur')
                 ->on('saveurs')

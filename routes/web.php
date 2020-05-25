@@ -13,9 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WelcomeController@index')->name('welcome');
+Route::get('/saveur/{id}', 'PlatController@show')->name('saveur');
+Route::get('/creap','PlatController@create')->name('createP');
+
+route::post('/saveP','PlatController@store')->name('saveP');
+Route::get('/creaS','SaveurController@create')->name('createS');
+
+route::post('/saveS','SaveurController@store')->name('saveS');
 
 Auth::routes();
 
